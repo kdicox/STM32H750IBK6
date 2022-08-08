@@ -60,8 +60,8 @@ all: main-build
 main-build: 01_STM32H750IBK6.elf secondary-outputs
 
 # Tool invocations
-01_STM32H750IBK6.elf 01_STM32H750IBK6.map: $(OBJS) $(USER_OBJS) C:\Users\cox_user\STM32CubeIDE\workspace_1.9.0\2_STM32H750IBK6\STM32H750IBKX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "01_STM32H750IBK6.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m7 -T"C:\Users\cox_user\STM32CubeIDE\workspace_1.9.0\2_STM32H750IBK6\STM32H750IBKX_FLASH.ld" --specs=nosys.specs -Wl,-Map="01_STM32H750IBK6.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+01_STM32H750IBK6.elf 01_STM32H750IBK6.map: $(OBJS) $(USER_OBJS) D:\project\03_quarantine_project\06_src\repo\STM32H750IBK6\01_STM32H750IBK6\STM32H750IBKX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "01_STM32H750IBK6.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m7 -T"D:\project\03_quarantine_project\06_src\repo\STM32H750IBK6\01_STM32H750IBK6\STM32H750IBKX_FLASH.ld" --specs=nosys.specs -Wl,-Map="01_STM32H750IBK6.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
