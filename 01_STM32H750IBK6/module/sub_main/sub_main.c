@@ -79,6 +79,8 @@ void	SUBMain_InitModule( void )
 	PUTS( "  Configuration Config Data\r\n" );
 	//CFGDATA_DeInit();
 
+	LP5024_Initial(g_p_hi2c1, 0x28);
+
 
 	PUTS( "  Configuration COMPLETE\r\n" );
 	//HAL_UART_Receive_IT( g_p_cons_uart, &g_cons_recv, 1);

@@ -22,11 +22,12 @@ extern "C" {
 /* Exported constants --------------------------------------------------------*/
 /* Exported macro ------------------------------------------------------------*/
 /* Exported functions prototypes ---------------------------------------------*/
-//	디바이스 초기화 (디바이스 설정이 필요한 경우 여기서 설정함)
-//	LED 출력 (0:off, 255:최고 출력)
-//	디바이스 레지스터 읽기
-//	디바이스 레지스터 쓰기
+void	LP5024_Initial(I2C_HandleTypeDef* _p_hi2c, uint8_t _id);
 
+void	LP5024_Output(I2C_HandleTypeDef* _p_hi2c, uint8_t _id, uint8_t _rates);
+
+uint8_t	LP5024_Read(I2C_HandleTypeDef* _p_hi2c, uint8_t _id, uint8_t _addr);
+void	LP5024_Write(I2C_HandleTypeDef* _p_hi2c, uint8_t _id, uint8_t _addr, uint8_t _data);
 /* Private defines -----------------------------------------------------------*/
 
 #ifdef __cplusplus
