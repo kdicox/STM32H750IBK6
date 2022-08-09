@@ -24,4 +24,6 @@ SUBDIRS := \
 Core/Src \
 Core/Startup \
 Drivers/STM32H7xx_HAL_Driver/Src \
+module/cons_msg \
+module/sub_main \
 
