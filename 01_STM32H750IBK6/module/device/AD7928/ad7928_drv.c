@@ -70,6 +70,21 @@
 /* Private includes ----------------------------------------------------------*/
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
+#define		CTRL_BIT_WR			(0x0800)
+#define		CTRL_BIT_SEQ		(0x0400)
+#define		CTRL_BITS_CH0		(0x0000)
+#define		CTRL_BITS_CH1		(0x0040)
+#define		CTRL_BITS_CH2		(0x0080)
+#define		CTRL_BITS_CH3		(0x00C0)
+#define		CTRL_BITS_CH4		(0x0100)
+#define		CTRL_BITS_CH5		(0x0140)
+#define		CTRL_BITS_CH6		(0x0180)
+#define		CTRL_BITS_CH7		(0x01C0)
+#define		CTRL_BIT_PM1		(0x0020)
+#define		CTRL_BIT_PM0		(0x0010)
+#define		CTRL_BIT_SHADOW		(0x0008)
+#define		CTRL_BIT_RANGE		(0x0002)
+#define		CTRL_BIT_CODING		(0x0001)
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 /* Private function prototypes -----------------------------------------------*/
@@ -86,14 +101,27 @@ void	AD7928_Initial(SPI_HandleTypeDef* _p_hspi)
 	//HAL_StatusTypeDef HAL_SPI_Receive(SPI_HandleTypeDef *hspi, uint8_t *pData, uint16_t Size, uint32_t Timeout);
 	//HAL_StatusTypeDef HAL_SPI_TransmitReceive(SPI_HandleTypeDef *hspi, uint8_t *pTxData, uint8_t *pRxData, uint16_t Size, uint32_t Timeout);
 
-	uint16_t		ctrl_reg = 0x09F3;
-	uint16_t		data;
+	uint16_t		ctrl_reg[8] = {
+			CTRL_BIT_WR | CTRL_BITS_CH0 | CTRL_BIT_PM1 | CTRL_BIT_PM0 | CTRL_BIT_RANGE | CTRL_BIT_CODING,
+			CTRL_BIT_WR | CTRL_BITS_CH1 | CTRL_BIT_PM1 | CTRL_BIT_PM0 | CTRL_BIT_RANGE | CTRL_BIT_CODING,
+			CTRL_BIT_WR | CTRL_BITS_CH2 | CTRL_BIT_PM1 | CTRL_BIT_PM0 | CTRL_BIT_RANGE | CTRL_BIT_CODING,
+			CTRL_BIT_WR | CTRL_BITS_CH3 | CTRL_BIT_PM1 | CTRL_BIT_PM0 | CTRL_BIT_RANGE | CTRL_BIT_CODING,
+			CTRL_BIT_WR | CTRL_BITS_CH4 | CTRL_BIT_PM1 | CTRL_BIT_PM0 | CTRL_BIT_RANGE | CTRL_BIT_CODING,
+			CTRL_BIT_WR | CTRL_BITS_CH5 | CTRL_BIT_PM1 | CTRL_BIT_PM0 | CTRL_BIT_RANGE | CTRL_BIT_CODING,
+			CTRL_BIT_WR | CTRL_BITS_CH6 | CTRL_BIT_PM1 | CTRL_BIT_PM0 | CTRL_BIT_RANGE | CTRL_BIT_CODING,
+			CTRL_BIT_WR | CTRL_BITS_CH7 | CTRL_BIT_PM1 | CTRL_BIT_PM0 | CTRL_BIT_RANGE | CTRL_BIT_CODING
+	};
+
+	uint16_t		data, id;
 
 
-	while ( HAL_OK == HAL_SPI_TransmitReceive( _p_hspi, (uint8_t*)&ctrl_reg, (uint8_t*)&data, 2, 2000) ) {
-		for (int i = 0; i < 10000000; i++) {
+	id = 0;
+	while ( HAL_OK == HAL_SPI_TransmitReceive( _p_hspi, (uint8_t*)&ctrl_reg[id], (uint8_t*)&data, 1, 2000) ) {
+		for (int i = 0; i < 5000000; i++) {
 		}
-		PRINTF("SPI %X %d\r\n", (data >> 12)&0x000F, (int)data&0x0FFF);
+		PRINTF("SPI %X %d %d %04X\r\n", (data >> 12)&0x000F, (int)data&0x0FFF, id, ctrl_reg[id]);
+		id++;
+		id %= 8;
 	}
 }
 
