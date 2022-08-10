@@ -115,6 +115,16 @@ void	AD7928_Initial(SPI_HandleTypeDef* _p_hspi)
 	uint16_t		reg, data, id;
 
 
+	for (int i = 0; i < 10000000; i++) {
+	}
+
+	reg = 0xFFFF;
+	if ( HAL_OK == HAL_SPI_TransmitReceive( _p_hspi, (uint8_t*)&reg, (uint8_t*)&data, 1, 2000) ) {
+	}
+	reg = 0xFFFF;
+	if ( HAL_OK == HAL_SPI_TransmitReceive( _p_hspi, (uint8_t*)&reg, (uint8_t*)&data, 1, 2000) ) {
+	}
+
 	id = 0;
 	reg = ctrl_reg[id];
 	while ( HAL_OK == HAL_SPI_TransmitReceive( _p_hspi, (uint8_t*)&ctrl_reg[id], (uint8_t*)&data, 1, 2000) ) {
