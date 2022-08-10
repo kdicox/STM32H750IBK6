@@ -22,10 +22,10 @@ extern "C" {
 /* Exported constants --------------------------------------------------------*/
 /* Exported macro ------------------------------------------------------------*/
 /* Exported functions prototypes ---------------------------------------------*/
-//	디바이스 초기화 (디바이스 설정이 필요한 경우 여기서 설정함)
-//	ADC 값 읽어오기 (모든 데이터 한번에 읽기)
-//	디바이스 레지스터 읽기
-//	디바이스 레지스터 쓰기
+void	AD7928_Initial(SPI_HandleTypeDef* _p_hspi);
+
+uint16_t	AD7928_Read(SPI_HandleTypeDef* _p_hspi, uint16_t _addr);
+void	AD7928_Write(SPI_HandleTypeDef* _p_hspi, uint16_t _addr, uint16_t _data);
 
 /* Private defines -----------------------------------------------------------*/
 

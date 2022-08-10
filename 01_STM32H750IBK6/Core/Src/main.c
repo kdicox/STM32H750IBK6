@@ -157,6 +157,7 @@ int main(void)
   MX_SPI5_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
+  //	?Ç¨?ö©?ï† ?îîÎ∞îÏù¥?ä§Î•? Î®ºÏ? ?Ñ§?†à?ïú ?õÑ SUBMain_InitialÎ•? ?ò∏Ï∂úÌïú?ã§.
   g_p_huart2 = &g_h_huart2;
 
   g_p_hi2c1 = &g_h_i2c1;
@@ -502,10 +503,10 @@ static void MX_SPI1_Init(void)
   hspi1.Init.Mode = SPI_MODE_MASTER;
   hspi1.Init.Direction = SPI_DIRECTION_2LINES;
   hspi1.Init.DataSize = SPI_DATASIZE_16BIT;
-  hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;
+  hspi1.Init.CLKPolarity = SPI_POLARITY_HIGH;
   hspi1.Init.CLKPhase = SPI_PHASE_1EDGE;
   hspi1.Init.NSS = SPI_NSS_HARD_OUTPUT;
-  hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_2;
+  hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_8;
   hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;
   hspi1.Init.TIMode = SPI_TIMODE_DISABLE;
   hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
@@ -518,7 +519,7 @@ static void MX_SPI1_Init(void)
   hspi1.Init.MasterSSIdleness = SPI_MASTER_SS_IDLENESS_00CYCLE;
   hspi1.Init.MasterInterDataIdleness = SPI_MASTER_INTERDATA_IDLENESS_00CYCLE;
   hspi1.Init.MasterReceiverAutoSusp = SPI_MASTER_RX_AUTOSUSP_DISABLE;
-  hspi1.Init.MasterKeepIOState = SPI_MASTER_KEEP_IO_STATE_DISABLE;
+  hspi1.Init.MasterKeepIOState = SPI_MASTER_KEEP_IO_STATE_ENABLE;
   hspi1.Init.IOSwap = SPI_IO_SWAP_DISABLE;
   if (HAL_SPI_Init(&hspi1) != HAL_OK)
   {
@@ -550,10 +551,10 @@ static void MX_SPI2_Init(void)
   hspi2.Init.Mode = SPI_MODE_MASTER;
   hspi2.Init.Direction = SPI_DIRECTION_2LINES;
   hspi2.Init.DataSize = SPI_DATASIZE_16BIT;
-  hspi2.Init.CLKPolarity = SPI_POLARITY_LOW;
+  hspi2.Init.CLKPolarity = SPI_POLARITY_HIGH;
   hspi2.Init.CLKPhase = SPI_PHASE_1EDGE;
   hspi2.Init.NSS = SPI_NSS_HARD_OUTPUT;
-  hspi2.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_2;
+  hspi2.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_8;
   hspi2.Init.FirstBit = SPI_FIRSTBIT_MSB;
   hspi2.Init.TIMode = SPI_TIMODE_DISABLE;
   hspi2.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
@@ -566,7 +567,7 @@ static void MX_SPI2_Init(void)
   hspi2.Init.MasterSSIdleness = SPI_MASTER_SS_IDLENESS_00CYCLE;
   hspi2.Init.MasterInterDataIdleness = SPI_MASTER_INTERDATA_IDLENESS_00CYCLE;
   hspi2.Init.MasterReceiverAutoSusp = SPI_MASTER_RX_AUTOSUSP_DISABLE;
-  hspi2.Init.MasterKeepIOState = SPI_MASTER_KEEP_IO_STATE_DISABLE;
+  hspi2.Init.MasterKeepIOState = SPI_MASTER_KEEP_IO_STATE_ENABLE;
   hspi2.Init.IOSwap = SPI_IO_SWAP_DISABLE;
   if (HAL_SPI_Init(&hspi2) != HAL_OK)
   {
@@ -598,10 +599,10 @@ static void MX_SPI4_Init(void)
   hspi4.Init.Mode = SPI_MODE_MASTER;
   hspi4.Init.Direction = SPI_DIRECTION_2LINES;
   hspi4.Init.DataSize = SPI_DATASIZE_16BIT;
-  hspi4.Init.CLKPolarity = SPI_POLARITY_LOW;
+  hspi4.Init.CLKPolarity = SPI_POLARITY_HIGH;
   hspi4.Init.CLKPhase = SPI_PHASE_1EDGE;
   hspi4.Init.NSS = SPI_NSS_HARD_OUTPUT;
-  hspi4.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_2;
+  hspi4.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_8;
   hspi4.Init.FirstBit = SPI_FIRSTBIT_MSB;
   hspi4.Init.TIMode = SPI_TIMODE_DISABLE;
   hspi4.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
@@ -614,7 +615,7 @@ static void MX_SPI4_Init(void)
   hspi4.Init.MasterSSIdleness = SPI_MASTER_SS_IDLENESS_00CYCLE;
   hspi4.Init.MasterInterDataIdleness = SPI_MASTER_INTERDATA_IDLENESS_00CYCLE;
   hspi4.Init.MasterReceiverAutoSusp = SPI_MASTER_RX_AUTOSUSP_DISABLE;
-  hspi4.Init.MasterKeepIOState = SPI_MASTER_KEEP_IO_STATE_DISABLE;
+  hspi4.Init.MasterKeepIOState = SPI_MASTER_KEEP_IO_STATE_ENABLE;
   hspi4.Init.IOSwap = SPI_IO_SWAP_DISABLE;
   if (HAL_SPI_Init(&hspi4) != HAL_OK)
   {
@@ -646,10 +647,10 @@ static void MX_SPI5_Init(void)
   hspi5.Init.Mode = SPI_MODE_MASTER;
   hspi5.Init.Direction = SPI_DIRECTION_2LINES;
   hspi5.Init.DataSize = SPI_DATASIZE_16BIT;
-  hspi5.Init.CLKPolarity = SPI_POLARITY_LOW;
+  hspi5.Init.CLKPolarity = SPI_POLARITY_HIGH;
   hspi5.Init.CLKPhase = SPI_PHASE_1EDGE;
   hspi5.Init.NSS = SPI_NSS_HARD_OUTPUT;
-  hspi5.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_2;
+  hspi5.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_8;
   hspi5.Init.FirstBit = SPI_FIRSTBIT_MSB;
   hspi5.Init.TIMode = SPI_TIMODE_DISABLE;
   hspi5.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
@@ -662,7 +663,7 @@ static void MX_SPI5_Init(void)
   hspi5.Init.MasterSSIdleness = SPI_MASTER_SS_IDLENESS_00CYCLE;
   hspi5.Init.MasterInterDataIdleness = SPI_MASTER_INTERDATA_IDLENESS_00CYCLE;
   hspi5.Init.MasterReceiverAutoSusp = SPI_MASTER_RX_AUTOSUSP_DISABLE;
-  hspi5.Init.MasterKeepIOState = SPI_MASTER_KEEP_IO_STATE_DISABLE;
+  hspi5.Init.MasterKeepIOState = SPI_MASTER_KEEP_IO_STATE_ENABLE;
   hspi5.Init.IOSwap = SPI_IO_SWAP_DISABLE;
   if (HAL_SPI_Init(&hspi5) != HAL_OK)
   {

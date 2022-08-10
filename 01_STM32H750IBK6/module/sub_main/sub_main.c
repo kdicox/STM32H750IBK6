@@ -14,6 +14,7 @@
 
 #include	"sub_main.h"
 
+#include	"lp5024_drv.h"
 //#include	"config_data.h"
 //#include	"util.h"
 
@@ -80,6 +81,7 @@ void	SUBMain_InitModule( void )
 	//CFGDATA_DeInit();
 
 	LP5024_Initial(g_p_hi2c1, 0x28);
+	AD7928_Initial(g_p_hspi1);
 
 
 	PUTS( "  Configuration COMPLETE\r\n" );
