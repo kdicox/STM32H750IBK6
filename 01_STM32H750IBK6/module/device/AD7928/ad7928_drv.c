@@ -112,16 +112,18 @@ void	AD7928_Initial(SPI_HandleTypeDef* _p_hspi)
 			CTRL_BIT_WR | CTRL_BITS_CH7 | CTRL_BIT_PM1 | CTRL_BIT_PM0 | CTRL_BIT_RANGE | CTRL_BIT_CODING
 	};
 
-	uint16_t		data, id;
+	uint16_t		reg, data, id;
 
 
 	id = 0;
+	reg = ctrl_reg[id];
 	while ( HAL_OK == HAL_SPI_TransmitReceive( _p_hspi, (uint8_t*)&ctrl_reg[id], (uint8_t*)&data, 1, 2000) ) {
 		for (int i = 0; i < 5000000; i++) {
 		}
 		PRINTF("SPI %X %d %d %04X\r\n", (data >> 12)&0x000F, (int)data&0x0FFF, id, ctrl_reg[id]);
 		id++;
 		id %= 8;
+		reg = ctrl_reg[id];
 	}
 }
 
