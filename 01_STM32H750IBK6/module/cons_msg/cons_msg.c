@@ -13,8 +13,11 @@
 #include	<stdarg.h>
 
 #include	"cons_msg.h"
-//#include	"config_data.h"
-//#include	"util.h"
+
+#include	"util.h"
+
+#include	"sub_main.h"
+#include	"lp5024_drv.h"
 
 
 /* Private includes ----------------------------------------------------------*/
@@ -259,9 +262,16 @@ void	command_parser( char* _cmd )
 	//	compare command
 	if ( IS_TOKEN(tok, "help") ) {				//	mode command
 		console_puts( "==================================================\r\n" );
+		console_puts( "===========       COMMAND LIST       =============\r\n" );
+		console_puts( "==================================================\r\n" );
 		console_puts( "mode          : firmware mode\r\n" );
 		console_puts( "ver [mpu]     : firmware version\r\n" );
 		console_puts( "facdef        : factory default\r\n" );
+		console_puts( "ledc [num] [addr] [data]\r\n" );
+		console_puts( "  LED CONTROL DEVICE \r\n" );
+		console_puts( "  [num]  : 0 ~ 3\r\n" );
+		console_puts( "  [addr] : register address\r\n" );
+		console_puts( "  [data] : data to be stored in registers\r\n" );
 		console_puts( "==================================================\r\n" );
 	}
 	else if ( IS_TOKEN(tok, "mode") ) {			//	mode command
@@ -284,6 +294,64 @@ void	command_parser( char* _cmd )
 	}
 	else if ( IS_TOKEN(tok, "facdef") ) {       //  factory default
 		console_puts("$OK[facdef]#\r\n");
+	}
+	else if ( IS_TOKEN(tok, "ledc") ) {      //  LED CONTROL DEVICE
+		static	HI2CINFO_PTR		l_p_i2c_info[4] = {
+				&g_hi2c_info_1, &g_hi2c_info_2, &g_hi2c_info_3, &g_hi2c_info_4
+		};
+
+		uint8_t			num, addr, data;
+
+
+		tok = NEXT_TOKEN(TOKEN_DELIM, cmd);
+		if ( NULL == tok ) {
+			console_puts("$NG[ledctrl_empty_num]#\r\n");
+			return;
+		}
+
+		num = UTIL_CodeToByte( tok );
+
+		if ( 4 <= num ) {
+			console_puts("$NG[ledctrl_num]#\r\n");
+			return;
+		}
+		else if ( 0 == l_p_i2c_info[num]->f_probe_dev ) {
+			console_puts("$NG[ledctrl_not_found]#\r\n");
+			return;
+		}
+
+		tok = NEXT_TOKEN(TOKEN_DELIM, cmd);
+		if ( NULL == tok ) {
+			console_puts("$NG[ledctrl_empty_addr]#\r\n");
+			return;
+		}
+
+		addr = UTIL_CodeToByte( tok );
+
+		tok = NEXT_TOKEN(TOKEN_DELIM, cmd);
+		if ( NULL == tok ) {	//	READ
+			data = LP5024_Read(l_p_i2c_info[num], addr);
+
+			if ( 1 == l_p_i2c_info[num]->f_error ) {
+				console_puts("$NG[ledctrl_i2c_read]#\r\n");
+			}
+			else {
+				console_printf("$OK[RD%02X:%02X]#\r\n", addr, data);
+			}
+		}
+		else {					//	WRITE
+			data = UTIL_CodeToByte( tok );
+			LP5024_Write(l_p_i2c_info[num], addr, data);
+			if ( 1 == l_p_i2c_info[num]->f_error ) {
+				console_puts("$NG[ledctrl_i2c_write]#\r\n");
+			}
+			else {
+				console_printf("$OK[WR%02X:%02X]#\r\n", addr, data);
+			}
+		}
+	}
+	else {
+		console_puts("$NG[unknown_command]#\r\n");
 	}
 }
 

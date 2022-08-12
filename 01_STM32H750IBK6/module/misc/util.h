@@ -1,12 +1,12 @@
 /*
- * sub_main.h
+ * util.h
  *
- *  Created on: Apr 28, 2022
+ *  Created on: 2022. 8. 12.
  *      Author: CSI
  */
 
-#ifndef APPLICATION_USER_MODULE_SUB_MAIN_H_
-#define APPLICATION_USER_MODULE_SUB_MAIN_H_
+#ifndef MISC_UTIL_H_
+#define MISC_UTIL_H_
 
 
 #ifdef __cplusplus
@@ -26,37 +26,32 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* Exported types ------------------------------------------------------------*/
-extern	HI2CINFO					g_hi2c_info_1;
-extern	HI2CINFO					g_hi2c_info_2;
-extern	HI2CINFO					g_hi2c_info_3;
-extern	HI2CINFO					g_hi2c_info_4;
-
-
-extern	SPI_HandleTypeDef *			g_p_hspi1;
-extern	SPI_HandleTypeDef *			g_p_hspi2;
-extern	SPI_HandleTypeDef *			g_p_hspi3;
-extern	SPI_HandleTypeDef *			g_p_hspi4;
-
-extern	UART_HandleTypeDef *		g_p_huart2;
-
-
 /* Exported constants --------------------------------------------------------*/
 /* Exported macro ------------------------------------------------------------*/
 /* Exported functions prototypes ---------------------------------------------*/
-void	SUBMain_Initial( void );
+uint16_t	UTIL_CalculateCRC16( uint8_t* p_buf, uint16_t len );
 
-void	SUBMain_InitModule( void );
+void	UTIL_SetCalcCRC16( void );
+void	UTIL_CalcCRC16( uint8_t buf );
+uint16_t	UTIL_GetCalcCRC16( void );
 
-void	SUBMain_UARTRx_IT(UART_HandleTypeDef* _p_uart_info);
-void	SUBMain_UARTTx_IT(UART_HandleTypeDef* _p_uart_info);
+uint8_t		UTIL_CodeToByte( char* code );
+uint16_t	UTIL_CodeToWord( char* code );
+uint32_t	UTIL_CodeToDword( char* code );
 
-void	SUBMain_Process( void );
+int8_t		UTIL_CodeToInt8( char* code );
+int16_t	    UTIL_CodeToInt16( char* code );
+int32_t	    UTIL_CodeToInt32( char* code );
+
+int8_t		UTIL_CodeToReal8( char* code, uint8_t _pt_num );
+int16_t	    UTIL_CodeToReal16( char* code, uint8_t _pt_num );
+int32_t	    UTIL_CodeToReal32( char* code, uint8_t _pt_num );
 /* Private defines -----------------------------------------------------------*/
+
 
 #ifdef __cplusplus
 }
 #endif
 
 
-#endif /* APPLICATION_USER_MODULE_SUB_MAIN_H_ */
-
+#endif /* MISC_UTIL_H_ */

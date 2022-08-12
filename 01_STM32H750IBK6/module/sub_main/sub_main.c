@@ -30,10 +30,10 @@ const	char*				g_build_time	= __TIME__;		//	build time
 const	uint16_t			g_fw_ver		= 0x0100;		//	ver 01.00
 
 
-I2C_HandleTypeDef *			g_p_hi2c1 = NULL;
-I2C_HandleTypeDef *			g_p_hi2c2 = NULL;
-I2C_HandleTypeDef *			g_p_hi2c3 = NULL;
-I2C_HandleTypeDef *			g_p_hi2c4 = NULL;
+HI2CINFO					g_hi2c_info_1 = { NULL, 0, 0, 0 };
+HI2CINFO					g_hi2c_info_2 = { NULL, 0, 0, 0 };
+HI2CINFO					g_hi2c_info_3 = { NULL, 0, 0, 0 };
+HI2CINFO					g_hi2c_info_4 = { NULL, 0, 0, 0 };
 
 SPI_HandleTypeDef *			g_p_hspi1 = NULL;
 SPI_HandleTypeDef *			g_p_hspi2 = NULL;
@@ -77,13 +77,21 @@ void	SUBMain_InitModule( void )
 		   g_build_time
 		   );
 
-	PUTS( "  Configuration Config Data\r\n" );
+	//PUTS( "  Configuration Config Data\r\n" );
 	//CFGDATA_DeInit();
 
-	LP5024_Initial(g_p_hi2c1, 0x28);
-	AD7928_Initial(g_p_hspi1);
+	PUTS( "  Configuration LP5024\r\n" );
+	LP5024_Initial(&g_hi2c_info_1);
+	LP5024_Initial(&g_hi2c_info_2);
+	LP5024_Initial(&g_hi2c_info_3);
+	LP5024_Initial(&g_hi2c_info_4);
+
+	PUTS( "\r\n" );
+	PUTS( "  Configuration AD7928\r\n" );
+	//AD7928_Initial(g_p_hspi1);
 
 
+	PUTS( "\r\n" );
 	PUTS( "  Configuration COMPLETE\r\n" );
 	//HAL_UART_Receive_IT( g_p_cons_uart, &g_cons_recv, 1);
 	//HAL_UART_Receive_IT( g_p_ecom_uart, &g_ecom_recv, 1);

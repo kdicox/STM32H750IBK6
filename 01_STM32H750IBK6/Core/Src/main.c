@@ -65,6 +65,11 @@ UART_HandleTypeDef huart2;
 #define		g_h_spi5	(hspi5)
 
 #define		g_h_huart2	(huart2)
+
+const uint8_t				HI2C1_ID = 0x28;
+const uint8_t				HI2C2_ID = 0x28;
+const uint8_t				HI2C3_ID = 0x28;
+const uint8_t				HI2C4_ID = 0x28;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -87,33 +92,6 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef*);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-uint8_t i2c_read(uint8_t addr)
-{
-
-	uint8_t		data = 0;
-
-	if (HAL_OK != HAL_I2C_Master_Transmit(&hi2c1, (0x28 << 1), &addr, 1, 500)) {
-	  while (1);
-	}
-
-	if (HAL_OK != HAL_I2C_Master_Receive(&hi2c1, (0x28 << 1) |0x01, &data, 1, 500)) {
-	  while (1);
-	}
-
-	return data;
-}
-
-
-void i2c_write(uint8_t addr, uint8_t data)
-{
-	uint8_t		reg_data[2];
-
-	reg_data[0] = addr;
-	reg_data[1] = data;
-	if (HAL_OK != HAL_I2C_Master_Transmit(&hi2c1, (0x28 << 1), &reg_data[0], 2, 500)) {
-	  while (1);
-	}
-}
 /* USER CODE END 0 */
 
 /**
@@ -157,13 +135,20 @@ int main(void)
   MX_SPI5_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
-  //	?‚¬?š©?•  ?””ë°”ì´?Š¤ë¥? ë¨¼ì? ?„¤? ˆ?•œ ?›„ SUBMain_Initialë¥? ?˜¸ì¶œí•œ?‹¤.
+  //	?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½ë°”ì´?ï¿½ï¿½ï¿½? ë¨¼ï¿½? ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½ SUBMain_Initialï¿½? ?ï¿½ï¿½ì¶œí•œ?ï¿½ï¿½.
   g_p_huart2 = &g_h_huart2;
 
-  g_p_hi2c1 = &g_h_i2c1;
-  g_p_hi2c2 = &g_h_i2c2;
-  g_p_hi2c3 = &g_h_i2c3;
-  g_p_hi2c4 = &g_h_i2c4;
+  g_hi2c_info_1.p_hi2c	= &g_h_i2c1;
+  g_hi2c_info_1.id		= HI2C1_ID;
+
+  g_hi2c_info_2.p_hi2c	= &g_h_i2c2;
+  g_hi2c_info_2.id		= HI2C2_ID;
+
+  g_hi2c_info_3.p_hi2c	= &g_h_i2c3;
+  g_hi2c_info_3.id		= HI2C3_ID;
+
+  g_hi2c_info_4.p_hi2c	= &g_h_i2c4;
+  g_hi2c_info_4.id		= HI2C4_ID;
 
   g_p_hspi1 = &g_h_spi1;
   g_p_hspi2 = &g_h_spi2;
